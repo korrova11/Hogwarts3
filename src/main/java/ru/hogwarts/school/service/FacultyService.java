@@ -5,7 +5,9 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
@@ -17,30 +19,39 @@ public class FacultyService {
     }
 
     public Faculty add(Faculty faculty) {
-       faculty.setId(countf++);
+       faculty.setId(++countf);
         facultyMap.put(faculty.getId(),faculty);
         return faculty;
 
     }
 
-    public Faculty remove(Faculty faculty) {
-        facultyMap.remove(faculty.getId(), faculty);
+    public Faculty remove(Long id) {
+        facultyMap.remove(id);
+        return facultyMap.get(id);
+    }
+
+    public Faculty find(Long id)  {
+
+
+        return facultyMap.get(id);
+
+    }
+
+    public Faculty change(Long id,Faculty faculty) {
+        facultyMap.put(id, faculty);
+        faculty.setId(id);
         return faculty;
+
     }
+    public List<Faculty> find(String color) {
 
-    public Faculty find(Faculty faculty) throws ClassNotFoundException {
 
-        return facultyMap.values().stream()
-                .filter(e -> e.equals(faculty))
-                .findFirst()
-                .orElseThrow(ClassNotFoundException::new);
-    }
+        final List<Faculty> colorFaculty =
+                facultyMap.values().stream()
+                        .filter(e -> e.getColor().equals(color))
+                        .collect(Collectors.toList());
 
-    public Faculty change(Faculty faculty1, Faculty faculty2) {
-        facultyMap.put(faculty1.getId(), faculty2);
-        faculty1.setId(faculty1.getId());
-        return faculty2;
-
+        return colorFaculty;
     }
 }
 

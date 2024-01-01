@@ -5,7 +5,9 @@ import ru.hogwarts.school.model.Student;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -21,15 +23,16 @@ public class StudentService {
     }
 
     public Student add(Student student) {
-        student.setId(count++);
+        student.setId(++count);
         studentMap.put(student.getId(), student);
         return student;
 
     }
 
-    public Student remove(Student student) {
-        studentMap.remove(student.getId(), student);
-        return student;
+    public Student remove(Long id) {
+
+        studentMap.remove(id);
+        return studentMap.get(id);
     }
 
     public Student find(Long id)  {
@@ -40,8 +43,19 @@ public class StudentService {
                 .orElseThrow(IllegalArgumentException::new);*/
         return studentMap.get(id);
     }
+    public List<Student> find(int age) {
 
-    public Student change(Long id,Student student) {
+
+        final List<Student> ageStudent =
+                studentMap.values().stream()
+                        .filter(e -> e.getAge() == age)
+                        .collect(Collectors.toList());
+
+        return ageStudent;
+    }
+
+
+        public Student change(Long id,Student student) {
         studentMap.put(id, student);
         student.setId(id);
         return student;
