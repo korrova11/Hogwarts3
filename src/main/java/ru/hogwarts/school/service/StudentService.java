@@ -5,10 +5,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositiries.FacultyRepository;
 import ru.hogwarts.school.repositiries.StudentRepository;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,14 +31,15 @@ public class StudentService {
         return studentRepository.findById(id).get();
     }
 
-    public List<Student> find(int age) {
+    public Collection<Student> find(int age) {
+        return studentRepository.findStudentByAge(age);
 
-        final List<Student> ageStudent =
+      /*  final List<Student> ageStudent =
                 studentRepository.findAll().stream()
                         .filter(e -> e.getAge() == age)
                         .collect(Collectors.toList());
 
-        return ageStudent;
+        return ageStudent;*/
     }
 
 
