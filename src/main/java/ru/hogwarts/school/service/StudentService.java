@@ -2,6 +2,8 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositiries.FacultyRepository;
+import ru.hogwarts.school.repositiries.StudentRepository;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -11,43 +13,31 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
-    private Map<Long, Student> studentMap = new HashMap<>();
-    private static Long count = 0L;
+    private final StudentRepository studentRepository;
 
-    public StudentService(Map<Long, Student> studentMap) {
-        this.studentMap = studentMap;
-
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
-    public StudentService() {
-    }
 
     public Student add(Student student) {
-        student.setId(++count);
-        studentMap.put(student.getId(), student);
-        return student;
+        return studentRepository.save(student);
 
     }
 
-    public Student remove(Long id) {
+    public void remove(Long id) {
+        studentRepository.deleteById(id);
 
-        studentMap.remove(id);
-        return studentMap.get(id);
     }
 
-    public Student find(Long id)  {
-
-       /* return studentMap.values().stream()
-                .filter(e -> e.equals(student))
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);*/
-        return studentMap.get(id);
+    public Student find(Long id) {
+        return studentRepository.findById(id).get();
     }
+
     public List<Student> find(int age) {
 
-
         final List<Student> ageStudent =
-                studentMap.values().stream()
+                studentRepository.findAll().stream()
                         .filter(e -> e.getAge() == age)
                         .collect(Collectors.toList());
 
@@ -55,10 +45,9 @@ public class StudentService {
     }
 
 
-        public Student change(Long id,Student student) {
-        studentMap.put(id, student);
-        student.setId(id);
-        return student;
+    public Student change(Long id, Student student) {
+
+        return studentRepository.save(student);
 
     }
 }
