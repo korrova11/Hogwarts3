@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repositiries.FacultyRepository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,15 +36,15 @@ public class FacultyService {
 
     }
 
-    public List<Faculty> find(String color) {
+    public Collection<Faculty> find(String color) {
+        return facultyRepository.findFacultyByColor(color);
 
-
-        final List<Faculty> colorFaculty =
+      /*  final List<Faculty> colorFaculty =
                 facultyRepository.findAll().stream()
                         .filter(e -> e.getColor().equals(color))
                         .collect(Collectors.toList());
 
-        return colorFaculty;
+        return colorFaculty;*/
     }
 }
 
