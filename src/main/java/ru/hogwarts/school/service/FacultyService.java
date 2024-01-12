@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
-   private final FacultyRepository facultyRepository;
+    private final FacultyRepository facultyRepository;
 
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
 
     public Faculty add(Faculty faculty) {
-       return facultyRepository.save(faculty);
+        return facultyRepository.save(faculty);
 
     }
 
@@ -25,15 +25,16 @@ public class FacultyService {
 
     }
 
-    public Faculty find(Long id)  {
+    public Faculty find(Long id) {
         return facultyRepository.findById(id).get();
     }
 
-    public Faculty change(Long id,Faculty faculty) {
+    public Faculty change(Long id, Faculty faculty) {
 
         return facultyRepository.save(faculty);
 
     }
+
     public List<Faculty> find(String color) {
 
 
