@@ -24,9 +24,10 @@ public class Faculty {
         return students;
     }
 
-    public Faculty(String name, String color) {
+    public Faculty(String name, String color, Long id) {
         this.name = name;
         this.color = color;
+        this.id = id;
     }
 
     public Faculty() {
