@@ -7,6 +7,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RequestMapping("/faculty")
@@ -19,21 +20,31 @@ public class FacultyController {
     }
 
     @GetMapping("{facultyId}")
-    public ResponseEntity<Faculty> getFaculty(@PathVariable Long FacultyId) {
-        Faculty faculty = facultyService.find(FacultyId);
+    public ResponseEntity<Faculty> getFacultyId(@PathVariable Long facultyId) {
+        Faculty faculty = facultyService.find(facultyId);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(faculty);
 
     }
-    @GetMapping("/{color}")
-    public ResponseEntity<List<Faculty>> getStudent(@PathVariable String color) {
-        // List<Student> students = (java.util.List<Student>) studentService.find(studentAge);
-        if (facultyService.find(color).isEmpty()) {
-            return ResponseEntity.notFound().build();
+
+    @GetMapping("{facultyId}/students")
+    public ResponseEntity<Collection<Student>> getFacultyIdByStudents(@PathVariable Long facultyId) {
+        return ResponseEntity.ok(facultyService.findStudentByFaculty(facultyId));
+    }
+
+    @GetMapping()
+    public ResponseEntity getFaculty(@RequestParam(required = false) String color,
+                                     @RequestParam(required = false) String name) {
+
+        if (color != null && !color.isBlank()) {
+            return ResponseEntity.ok(facultyService.findFacultyByColor(color));
         }
-        return ResponseEntity.ok((java.util.List<Faculty>) facultyService.find(color));
+        if (name != null && !name.isBlank()) {
+            return ResponseEntity.ok(facultyService.findFacultyByName(name));
+        }
+        return ResponseEntity.ok(facultyService.findAll());
 
     }
 
@@ -54,8 +65,8 @@ public class FacultyController {
 
     @DeleteMapping("{facultyId}")
     public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long facultyId) {
-       facultyService.remove(facultyId);
-               return ResponseEntity.ok().build();
+        facultyService.remove(facultyId);
+        return ResponseEntity.ok().build();
 
     }
 
