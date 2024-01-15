@@ -24,6 +24,8 @@ class StudentServiceIntTest {
     StudentService out;
 
     Student student1 = new Student("Студент1", 12, 1l);
+
+
     Student student2 = new Student("Студент2", 12, 2l);
     Student student3 = new Student("Студент3", 11, 3l);
     List<Student> studentList = new ArrayList<>(List.of(student1, student2, student3));
@@ -36,12 +38,10 @@ class StudentServiceIntTest {
         verify(repository, times(1)).save(student2);
     }
 
-    /*@Test
+    @Test
     public void findFacultyByStudentTest() {
-        when(repository.getReferenceById(1l)).thenReturn(student1);
-        when(repository.getReferenceById(1l).getFaculty()).thenReturn(faculty);
+        when(repository.getReferenceById(any())).thenReturn(student1);
+        student1.faculty = faculty;
         assertEquals(out.findFacultyByStudent(1l), faculty);
-    }*/
-
-
+    }
 }

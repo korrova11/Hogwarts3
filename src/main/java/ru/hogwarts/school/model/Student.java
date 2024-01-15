@@ -15,7 +15,7 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "faculty_id")
-    private Faculty faculty;
+    public Faculty faculty;
 
     public Student(String name, int age, Long id) {
         this.name = name;
