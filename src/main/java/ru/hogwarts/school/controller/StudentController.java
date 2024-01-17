@@ -51,14 +51,13 @@ public class StudentController {
     @GetMapping()
     public ResponseEntity getStudent(@RequestParam(required = false) Integer min,
                                      @RequestParam(required = false) Integer max) {
-        if (min > max) {
+       if (min!=null&& max!=null&&min>max) {
             return ResponseEntity.badRequest().build();
         }
 
         if (min != null && max != null) {
             return ResponseEntity.ok(studentService.findAgeBetween(min, max));
         }
-
         return ResponseEntity.ok(studentService.findAll());
     }
 
