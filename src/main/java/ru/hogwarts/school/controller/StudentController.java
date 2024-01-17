@@ -51,7 +51,7 @@ public class StudentController {
     @GetMapping()
     public ResponseEntity getStudent(@RequestParam(required = false) Integer min,
                                      @RequestParam(required = false) Integer max) {
-       if (min!=null&& max!=null&&min>max) {
+        if (min != null && max != null && min > max) {
             return ResponseEntity.badRequest().build();
         }
 

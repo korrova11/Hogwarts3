@@ -52,7 +52,12 @@ public class AvatarService implements AvatarServiceInt {
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
-    public Avatar findAvatarByStudentId(Long studentId){
+
+    public Avatar findAvatarByStudentId(Long studentId) {
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
+    }
+
+    public Avatar findAvatar(Long id) {
+        return avatarRepository.findById(id).get();
     }
 }
