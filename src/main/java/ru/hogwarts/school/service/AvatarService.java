@@ -61,9 +61,9 @@ public class AvatarService implements AvatarServiceInt {
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 
-    public Avatar findAvatar(Long id) {
+    /*public Avatar findAvatar(Long id) {
         return avatarRepository.findById(id).get();
-    }
+    }*/
 
     private byte[] generateDataForDB(Path filePath) throws IOException {
         try (
