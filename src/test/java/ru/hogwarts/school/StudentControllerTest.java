@@ -22,4 +22,10 @@ public class StudentControllerTest {
     void contextLoads() throws Exception {
         Assertions.assertThat(studentController).isNotNull();
     }
+    @Test
+    public void testGetStudent() throws Exception {
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student", String.class))
+                .isNotNull();
+    }
 }
