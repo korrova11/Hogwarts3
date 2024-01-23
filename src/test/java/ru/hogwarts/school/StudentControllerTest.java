@@ -87,15 +87,18 @@ public class StudentControllerTest {
                        String.class)))
                .toString().contains("500");
     }
-    /*@Test
+    @Test
     public void testPutStudent(){
-        Student student = new Student("111",12,283L);
+        Student student = new Student("111",12,0L);
+        Long id = this.restTemplate.postForObject("http://localhost:" + port + "/student",
+                student, Student.class).getId();
+        Student student1 = new Student("222",14,id);
+
+         restTemplate.put( "http://localhost:" + port + "/student",student1);
         Assertions
-                .assertThat(this.restTemplate.put( "http://localhost:" + port + "/student",student))
+                .assertThat((this.restTemplate.getForObject("http://localhost:" + port +
+                                "/student/"+id,
+                        String.class))).contains(""+id);
 
-
-
-
-
-    }*/
+    }
 }
