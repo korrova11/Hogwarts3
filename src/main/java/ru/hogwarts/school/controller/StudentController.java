@@ -6,6 +6,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RequestMapping("/student")
@@ -49,8 +50,8 @@ public class StudentController {
     }
 
     @GetMapping()
-    public ResponseEntity getStudent(@RequestParam(required = false) Integer min,
-                                     @RequestParam(required = false) Integer max) {
+    public ResponseEntity<Collection<Student>> getStudent(@RequestParam(required = false) Integer min,
+                                                          @RequestParam(required = false) Integer max) {
         if (min != null && max != null && min > max) {
             return ResponseEntity.badRequest().build();
         }
