@@ -41,7 +41,8 @@ public class StudentControllerTest {
     @Test
     public void testGetStudentbyId() throws Exception{
                Assertions
-                .assertThat((this.restTemplate.getForObject("http://localhost:" + port + "/student/1", String.class)))
+                .assertThat((this.restTemplate.getForObject("http://localhost:" + port + "/student/1",
+                        String.class)))
                        .contains("1");
     }
     @Test
@@ -80,8 +81,21 @@ public class StudentControllerTest {
                student, Student.class).getId();
                 restTemplate.delete("http://localhost:" + port
                                 + "/student/"+id);
-
-
-
+       Assertions
+               .assertThat((this.restTemplate.getForObject("http://localhost:" + port +
+                               "/student/"+id,
+                       String.class)))
+               .toString().contains("500");
     }
+    /*@Test
+    public void testPutStudent(){
+        Student student = new Student("111",12,283L);
+        Assertions
+                .assertThat(this.restTemplate.put( "http://localhost:" + port + "/student",student))
+
+
+
+
+
+    }*/
 }
