@@ -27,7 +27,7 @@ public class StudentControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-   Student student = new Student("111",12,0l);
+   //Student student = new Student("111",12,0l);
     @Test
     void contextLoads() throws Exception {
         Assertions.assertThat(studentController).isNotNull();
