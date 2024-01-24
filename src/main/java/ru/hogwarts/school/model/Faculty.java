@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,10 +21,6 @@ public class Faculty {
     @OneToMany(mappedBy = "faculty")
     private Collection<Student> students;
 
-    public Collection<Student> getStudents() {
-        return students;
-    }
-
     public Faculty(String name, String color, Long id) {
         this.name = name;
         this.color = color;
@@ -32,6 +29,14 @@ public class Faculty {
 
     public Faculty() {
 
+    }
+
+    public Collection<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = List.copyOf(students);
     }
 
     @Override

@@ -83,7 +83,7 @@ public class FacultyControllerTest {
     }
     @Test
     public void testPutFaculty(){
-       // Faculty faculty = new Faculty("111",12,0L);
+
         Long id = this.restTemplate.postForObject("http://localhost:" + port + "/faculty",
                 faculty, Faculty.class).getId();
         Faculty faculty1 = new Faculty("Rst","51",id);
@@ -92,7 +92,7 @@ public class FacultyControllerTest {
         Assertions
                 .assertThat((this.restTemplate.getForObject("http://localhost:" + port +
                                 "/student/"+id,
-                        String.class))).contains(""+id);
+                        String.class))).toString().contains("Rst");
 
     }
 }
