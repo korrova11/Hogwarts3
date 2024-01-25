@@ -60,6 +60,8 @@ public class Student {
 
     public void setId(Long id) {
         this.id = id;
+    }public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     public String getName() {

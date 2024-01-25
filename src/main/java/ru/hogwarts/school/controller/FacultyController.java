@@ -35,7 +35,7 @@ public class FacultyController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getFaculty(@RequestParam(required = false) String color,
+    public ResponseEntity<?> getFacultyALLOrByNameOrColor(@RequestParam(required = false) String color,
                                      @RequestParam(required = false) String name) {
 
         if (color != null && !color.isBlank()) {

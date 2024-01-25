@@ -41,11 +41,11 @@ public class StudentController {
     }
 
     @GetMapping("/age/{studentAge}")
-    public ResponseEntity<List<Student>> getStudent(@PathVariable int studentAge) {
-        if (studentService.find(studentAge).isEmpty()) {
+    public ResponseEntity<List<Student>> getStudentsByAge(@PathVariable int studentAge) {
+        if (studentService.findByAge(studentAge).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok((java.util.List<Student>) studentService.find(studentAge));
+        return ResponseEntity.ok((java.util.List<Student>) studentService.findByAge(studentAge));
 
     }
 

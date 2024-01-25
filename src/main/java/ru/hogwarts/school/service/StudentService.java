@@ -32,7 +32,7 @@ public class StudentService {
         return studentRepository.findById(id).get();
     }
 
-    public Collection<Student> find(int age) {
+    public Collection<Student> findByAge(int age) {
         return studentRepository.findStudentByAge(age);
 
     }

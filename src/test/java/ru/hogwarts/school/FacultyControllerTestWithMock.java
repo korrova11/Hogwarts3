@@ -72,18 +72,12 @@ public class FacultyControllerTestWithMock {
     }
 
     @Test
-    public void getFacultyTest() throws Exception {
-
-        JSONObject facultyObject = new JSONObject();
-        facultyObject.put("name", name);
-        facultyObject.put("color", color);
-        facultyObject.put("id", 1L);
+    public void getFacultyByIdTest() throws Exception {
 
         when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/1") //send
-                        .content(facultyObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) //receive
@@ -98,28 +92,82 @@ public class FacultyControllerTestWithMock {
         List<Student> studentsTest = new ArrayList<>
                 (List.of(new Student("111", 10, 1L), new Student("222", 12, 2L)));
         faculty.setStudents(studentsTest);
-        JSONObject facultyObject1 = new JSONObject();
-        JSONObject facultyObject2 = new JSONObject();
-        facultyObject1.put("name", "111");
-        facultyObject1.put("age", 10);
-        facultyObject1.put("id", 1L);
-        facultyObject2.put("name", "222");
-        facultyObject2.put("age", 12);
-        facultyObject2.put("id", 2L);
-        JSONArray jsonArray = new JSONArray();
 
-        jsonArray.add(facultyObject1);
-        jsonArray.add(facultyObject2);
         when(facultyRepository.getReferenceById(any(Long.class))).thenReturn(faculty);
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/1/students") //send
-                        .content(jsonArray.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) //receive
                 .andReturn();
 
         Assertions.assertTrue(result.getResponse().getContentAsString().toString().contains("222"));
+
+    }
+
+    @Test
+    public void getFacultyALLOrByNameOrColorTest() throws Exception {
+
+
+        when(facultyRepository.findFacultyByNameIgnoreCase(any(String.class)))
+                .thenReturn(faculty);
+        when(facultyRepository.findFacultyByColorIgnoreCase(any(String.class)))
+                .thenReturn(faculty);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty?name=" + name) //send
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()) //receive
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty?color=" + color) //send
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()) //receive
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
+
+        List<Faculty> facultyTest = new ArrayList<>
+                (List.of(new Faculty("111", "111", 1L), new Faculty("222", "222", 2L)));
+
+        when(facultyRepository.findAll()).thenReturn(facultyTest);
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty") //send
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()) //receive
+                .andReturn();
+
+        Assertions.assertTrue(result.getResponse().getContentAsString().toString().contains("111"));
+        Assertions.assertTrue(result.getResponse().getContentAsString().toString().contains("222"));
+
+
+    }
+
+    @Test
+    public void updateFacultyTest() throws Exception {
+        JSONObject facultyObject = new JSONObject();
+        facultyObject.put("name", name);
+        facultyObject.put("color", color);
+        facultyObject.put("id", 1L);
+
+
+        when(facultyRepository.save(any())).thenReturn(faculty);
+        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/faculty") //send
+                        .content(facultyObject.toString())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()) //receive
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
 
     }
 
