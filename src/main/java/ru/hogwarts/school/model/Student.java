@@ -17,7 +17,7 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     @JsonIgnore
-    public Faculty faculty;
+    private Faculty faculty;
 
     public Student(String name, int age, Long id) {
         this.name = name;
