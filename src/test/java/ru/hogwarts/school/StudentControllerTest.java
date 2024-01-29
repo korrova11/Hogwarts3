@@ -27,7 +27,7 @@ public class StudentControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-   //Student student = new Student("111",12,0l);
+    //Student student = new Student("111",12,0l);
     @Test
     void contextLoads() throws Exception {
         Assertions.assertThat(studentController).isNotNull();
@@ -36,7 +36,7 @@ public class StudentControllerTest {
     public void testGetStudentAll() throws Exception {
         Assertions
                 .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student", String.class))
-                .isNotNull();
+                .isNotNull().contains("Kate");
     }
     @Test
     public void testGetStudentbyId() throws Exception{

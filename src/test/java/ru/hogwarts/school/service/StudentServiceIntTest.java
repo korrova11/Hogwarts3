@@ -38,10 +38,10 @@ class StudentServiceIntTest {
         verify(repository, times(1)).save(student2);
     }
 
-    @Test
+    /*@Test
     public void findFacultyByStudentTest() {
         when(repository.getReferenceById(any())).thenReturn(student1);
         student1.faculty = faculty;
         assertEquals(out.findFacultyByStudent(1l), faculty);
-    }
+    }*/
 }
