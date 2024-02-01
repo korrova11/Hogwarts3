@@ -55,4 +55,13 @@ public class StudentService {
         return studentRepository.getReferenceById(id).getFaculty();
 
     }
+    public Integer countStudents(){
+        return  studentRepository.countStudents();
+    }
+    public Integer   middleAgeByStudents(){
+        return  studentRepository.middleAgeByStudents();
+    }
+    public List<Student>   getLastFiveStudents(){
+        return  studentRepository.getLastFiveStudentsById();
+    }
 }

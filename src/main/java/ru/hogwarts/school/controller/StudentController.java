@@ -48,6 +48,18 @@ public class StudentController {
         return ResponseEntity.ok((java.util.List<Student>) studentService.findByAge(studentAge));
 
     }
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getStudentsByAge(){
+        return ResponseEntity.ok(studentService.countStudents());
+    }
+    @GetMapping("/middleAge")
+    public ResponseEntity<Integer> getMiddleAgeStudents(){
+        return ResponseEntity.ok(studentService.middleAgeByStudents());
+    }
+    @GetMapping("/last5")
+    public ResponseEntity<List<Student>> getLastFiveStudentsById(){
+        return ResponseEntity.ok(studentService.getLastFiveStudents());
+    }
 
     @GetMapping()
     public ResponseEntity<Collection<Student>> getStudent(@RequestParam(required = false) Integer min,
