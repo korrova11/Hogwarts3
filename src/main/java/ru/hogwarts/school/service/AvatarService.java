@@ -86,7 +86,7 @@ public class AvatarService implements AvatarServiceInt {
 
 
     }
-
+    //метод пагинации (постраничного вывода) списка аватарок
     public List<Avatar> getAll(Integer number, Integer size) {
         PageRequest pageRequest = PageRequest.of(number - 1, size);
         return avatarRepository.findAll(pageRequest).getContent();
