@@ -36,6 +36,7 @@ public class AvatarService implements AvatarServiceInt {
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Was invoked method for uploadAvatar");
         Student student = studentService.find(studentId);
         Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -63,6 +64,7 @@ public class AvatarService implements AvatarServiceInt {
     }
 
     public Avatar findAvatarByStudentId(Long studentId) {
+        logger.info("Was invoked method for findAvatarByStudentId");
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 
@@ -91,6 +93,7 @@ public class AvatarService implements AvatarServiceInt {
     }
     //метод пагинации (постраничного вывода) списка аватарок
     public List<Avatar> getAll(Integer number, Integer size) {
+        logger.info("Was invoked method for getAllAvatars");
         PageRequest pageRequest = PageRequest.of(number - 1, size);
         return avatarRepository.findAll(pageRequest).getContent();
     }
