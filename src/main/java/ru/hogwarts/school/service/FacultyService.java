@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,6 +67,12 @@ public class FacultyService implements FacultyServiseInt {
     public Collection<Student> findStudentByFaculty(long id) {
         logger.info("Was invoked method for findStudentByFaculty");
         return facultyRepository.getReferenceById(id).getStudents();
+    }
+    public String getLongestNameFaculty(){
+        return facultyRepository.findAll().stream()
+                .max(Comparator.comparingInt(f -> f.getName().length()))
+                .get().getName();
+
     }
 
 }

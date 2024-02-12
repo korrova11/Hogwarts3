@@ -18,6 +18,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -96,5 +97,33 @@ public class AvatarService implements AvatarServiceInt {
         logger.info("Was invoked method for getAllAvatars");
         PageRequest pageRequest = PageRequest.of(number - 1, size);
         return avatarRepository.findAll(pageRequest).getContent();
+    }
+     /* long start2 = System.currentTimeMillis();
+        sortInsertion(generateRandomArray());
+        System.out.println(System.currentTimeMillis() - start2);//594*/
+    public int summa(){
+        logger.info("Was invoked method for summa");
+        int sum = Stream.iterate(1, a -> a +1) .limit(1_000_000)
+                .reduce(0, (a, b) -> a + b );
+        logger.info("Was ended method for summa");
+        return sum;
+    }
+    public double timeSumma(){
+        long start2 = System.currentTimeMillis();
+        summa();
+        return (System.currentTimeMillis() - start2);
+    }
+    public int summaParallel(){
+        logger.info("Was invoked method for summaParallel");
+        int sum = Stream.iterate(1, a -> a +1) .limit(1_000_000)
+                .parallel()
+                .reduce(0, (a, b) -> a + b );
+        logger.info("Was ended method for summaParallel");
+        return sum;
+    }
+    public double timeSummaParallel(){
+        long start2 = System.currentTimeMillis();
+        summaParallel();
+        return (System.currentTimeMillis() - start2);
     }
 }
