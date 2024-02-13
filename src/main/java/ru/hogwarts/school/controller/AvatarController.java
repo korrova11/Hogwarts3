@@ -59,11 +59,11 @@ public class AvatarController {
                                                       @RequestParam("size") Integer pageSize){
         return ResponseEntity.ok(avatarService.getAll(pageNumber,pageSize));
     }
-    @GetMapping("/time")
+    @GetMapping("/summa")
     public ResponseEntity<Integer> getTime(){
         return ResponseEntity.ok(avatarService.summa());
     }
-    @GetMapping("/timeParallel")
+    @GetMapping("/summaParallel")
     public ResponseEntity<Integer> getTimeParallel(){
         return ResponseEntity.ok(avatarService.summaParallel());
     }
