@@ -115,7 +115,6 @@ public class AvatarService implements AvatarServiceInt {
     public int summaParallel() {
         long start = System.currentTimeMillis();
         logger.info("Was invoked method for summaParallel");
-
         int sum1 = IntStream.iterate(1, a -> a + 1)
                 .limit(1_000_000)
                 .parallel()
