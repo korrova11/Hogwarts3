@@ -65,16 +65,34 @@ public class StudentService {
         return studentRepository.getReferenceById(id).getFaculty();
 
     }
-    public Integer countStudents(){
+
+    public Integer countStudents() {
         logger.info("Was invoked method for countStudents student");
-        return  studentRepository.countStudents();
+        return studentRepository.countStudents();
     }
-    public Integer   middleAgeByStudents(){
+
+    public Integer middleAgeByStudents() {
         logger.info("Was invoked method for middleAgeStudents student");
-        return  studentRepository.middleAgeByStudents();
+        return studentRepository.middleAgeByStudents();
     }
-    public List<Student>   getLastFiveStudents(){
+
+   public Double middleAgeByStudentsByStream() {
+        return studentRepository.findAll().stream()
+               .collect((Collectors.averagingInt(Student::getAge)));
+    }
+
+    public List<Student> getLastFiveStudents() {
         logger.info("Was invoked method for getLast5Students student");
-        return  studentRepository.getLastFiveStudentsById();
+        return studentRepository.getLastFiveStudentsById();
+    }
+
+    public List<Student> getStudentsBeginWithA() {
+        return studentRepository.findAll().stream()
+                .parallel()
+                .filter(student -> student.getName().startsWith("A"))
+                .sorted(Comparator.comparing(Student::getName))
+                .collect(Collectors.toList());
+
+
     }
 }

@@ -18,6 +18,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -91,10 +93,35 @@ public class AvatarService implements AvatarServiceInt {
 
 
     }
+
     //метод пагинации (постраничного вывода) списка аватарок
     public List<Avatar> getAll(Integer number, Integer size) {
         logger.info("Was invoked method for getAllAvatars");
         PageRequest pageRequest = PageRequest.of(number - 1, size);
         return avatarRepository.findAll(pageRequest).getContent();
     }
+
+
+    public int summa() {
+        long start = System.currentTimeMillis();
+        logger.info("Was invoked method for summa");
+        int sum = Stream.iterate(1, a -> a + 1).limit(1_000_000)
+                .reduce(0, (a, b) -> a + b);
+        logger.info("time=" + (System.currentTimeMillis() - start));
+        return sum;
+    }
+
+
+    public int summaParallel() {
+        long start = System.currentTimeMillis();
+        logger.info("Was invoked method for summaParallel");
+        int sum1 = IntStream.iterate(1, a -> a + 1)
+                .limit(1_000_000)
+                .parallel()
+                .sum();
+        logger.info("time=" + (System.currentTimeMillis() - start));
+        return sum1;
+    }
+
+
 }

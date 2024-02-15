@@ -60,6 +60,14 @@ public class StudentController {
     public ResponseEntity<List<Student>> getLastFiveStudentsById(){
         return ResponseEntity.ok(studentService.getLastFiveStudents());
     }
+    @GetMapping("/studentsBeginNameWithA")
+    public ResponseEntity<List<Student>> getStudentsBeginWithA(){
+        return ResponseEntity.ok(studentService.getStudentsBeginWithA());
+    }
+    @GetMapping("/middleAgeByStudentsByStream")
+    public ResponseEntity<Double> middleAgeByStudentsByStream(){
+        return ResponseEntity.ok(studentService.middleAgeByStudentsByStream());
+    }
 
     @GetMapping()
     public ResponseEntity<Collection<Student>> getStudent(@RequestParam(required = false) Integer min,
