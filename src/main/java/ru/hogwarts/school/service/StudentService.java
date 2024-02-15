@@ -50,14 +50,14 @@ public class StudentService {
 
     }
 
-    public Collection<Student> findAll() {
+    public List<Student> findAll() {
         logger.info("Was invoked method for findAll student");
         return studentRepository.findAll();
     }
 
-    public Collection<Student> findAgeBetween(int min, int max) {
+    public List<Student> findAgeBetween(int min, int max) {
         logger.info("Was invoked method for findByAgeBetWeen student");
-        return studentRepository.findByAgeBetween(min, max);
+        return studentRepository.findByAgeBetween(min, max).stream().toList();
     }
 
     public Faculty findFacultyByStudent(long id) {
@@ -92,7 +92,38 @@ public class StudentService {
                 .filter(student -> student.getName().startsWith("A"))
                 .sorted(Comparator.comparing(Student::getName))
                 .collect(Collectors.toList());
+    }
+    public void printName(int i){
+        System.out.println(findAll().get(i).getName());
+    }
+    public void printNameParallel(){
+        printName(0);
+        new Thread(()->{
+            printName(2);
+            printName(3);
+        }).start();new Thread(()->{
+            printName(4);
+            printName(5);
+        }).start();
 
+        printName(1);
 
     }
+    public synchronized void printNameSynh(int i){
+        System.out.println(findAll().get(i).getName());
+    }
+    public void printNameParallelSynh(){
+        printNameSynh(0);
+        new Thread(()->{
+            printNameSynh(2);
+            printNameSynh(3);
+        }).start();new Thread(()->{
+            printNameSynh(4);
+            printNameSynh(5);
+        }).start();
+
+        printNameSynh(1);
+
+    }
+
 }
