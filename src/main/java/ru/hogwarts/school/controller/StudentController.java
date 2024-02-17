@@ -70,7 +70,7 @@ public class StudentController {
     }
 
     @GetMapping()
-    public ResponseEntity<Collection<Student>> getStudent(@RequestParam(required = false) Integer min,
+    public ResponseEntity<List<Student>> getStudent(@RequestParam(required = false) Integer min,
                                                           @RequestParam(required = false) Integer max) {
         if (min != null && max != null && min > max) {
             return ResponseEntity.badRequest().build();
@@ -80,6 +80,14 @@ public class StudentController {
             return ResponseEntity.ok(studentService.findAgeBetween(min, max));
         }
         return ResponseEntity.ok(studentService.findAll());
+    }
+    @GetMapping("/print-parallel")
+    public void  getNameStudent(){
+        studentService.printNameParallel();
+    }
+    @GetMapping("/print-synchronized")
+    public void  getNameStudentSynh(){
+        studentService.printNameParallelSynh();
     }
 
     @PostMapping
