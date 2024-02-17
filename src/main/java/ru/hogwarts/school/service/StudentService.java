@@ -16,6 +16,7 @@ public class StudentService {
     Logger logger = LoggerFactory.getLogger(StudentService.class);
     private final StudentRepository studentRepository;
 
+
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
@@ -80,6 +81,13 @@ public class StudentService {
         return studentRepository.findAll().stream()
                .collect((Collectors.averagingInt(Student::getAge)));
     }
+    public Double middleAgeByStudentsByStream1() {
+        return studentRepository.findAll().stream()
+               .mapToDouble(Student::getAge)
+                .average()
+                .orElse(0);
+    }
+
 
     public List<Student> getLastFiveStudents() {
         logger.info("Was invoked method for getLast5Students student");

@@ -91,7 +91,6 @@ public class AvatarService implements AvatarServiceInt {
 
         }
 
-
     }
 
     //метод пагинации (постраничного вывода) списка аватарок
